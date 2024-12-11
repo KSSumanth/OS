@@ -1,0 +1,38 @@
+#include<stdio.h>
+int main(){
+    int buff[10],buffsize,in,out,produce,consume;
+        int choice=0;
+    in=0;
+    out=0;
+    buffsize=5;
+    while(choice!=3){
+    printf("1.produce 2.consume 3.exit\n");
+    printf("enter your choice\n");
+    scanf("%d",&choice);
+    switch (choice)
+    {
+    case 1:
+        if((in+1)%buffsize==out){
+            printf("buff is full\n");
+        }
+        else{
+            printf("enter the value to buffer\n");
+            scanf("%d",&produce);
+            buff[in]=produce;
+            in=(in+1)%buffsize;
+        }
+        break;
+        case 2:
+        if(in==out){
+            printf("buff is empty\n");
+        }
+        else{
+            consume=buff[out];
+            out=(out+1)%buffsize;
+            printf("consumed item is %d\n",consume);
+        }
+    default:
+        break;
+    }
+    }
+}
