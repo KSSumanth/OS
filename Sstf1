@@ -1,0 +1,48 @@
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    int queue[100], t[100], head, seek = 0, n, i, j, temp;
+    float avg;
+
+    printf("*** SSTF Disk Scheduling Algorithm ***\n");
+    printf("Enter the size of Queue\t");
+    scanf("%d", &n);
+    printf("Enter the Queue\t");
+    for (i = 0; i < n; i++) {
+        scanf("%d", &queue[i]);
+    }
+    printf("Enter the initial head position\t");
+    scanf("%d", &head);
+
+    // Process each request in the queue
+    for (i = 0; i < n; i++) {
+        int min_seek = __INT_MAX__;
+        int min_index = -1;
+
+        // Find the closest request to the current head position
+        for (j = 0; j < n; j++) {
+            if (queue[j] != -1) { // Skip serviced requests
+                int distance = abs(head - queue[j]);
+                if (distance < min_seek) {
+                    min_seek = distance;
+                    min_index = j;
+                }
+            }
+        }
+
+        // Move the head to the closest request
+        if (min_index != -1) {
+            seek += abs(head - queue[min_index]);
+            head = queue[min_index];
+            queue[min_index] = -1; // Mark request as serviced
+        }
+    }
+
+    avg = seek / (float)n;
+
+    printf("\nTotal Seek Time is %d\t", seek);
+    printf("\nAverage Seek Time is %.2f\t", avg);
+
+    return 0;
+}
